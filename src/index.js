@@ -41,6 +41,27 @@ const fetchImageAssetsJson = async () => {
     });
 };
 
+function getImageAsset(imageAssetJson, fileName) {
+    return new Promise((resolve, reject) => {
+        https
+            .get(imageAssetJson.url, (res) => {
+                const dataStream = new stream.Transform();
+
+                res.on('data', (chunk) => {
+                    dataStream.push(chunk);
+                });
+
+                res.on('end', () => {
+                    fs.writeFileSync(`.temp/imageAssets/${fileName}`, dataStream.read());
+                    resolve();
+                });
+            })
+            .on('error', (e) => {
+                reject(`error while downloading '${fileName}': ${e.message}`);
+            });
+    });
+}
+
 const fetchImageAssets = async () => {
     const imageAssetsString = fs.readFileSync(`.temp/imageAssets.json`, { encoding: 'utf-8' });
     const imageAssetsJson = JSON.parse(imageAssetsString);
@@ -61,19 +82,7 @@ const fetchImageAssets = async () => {
             continue;
         }
 
-        https
-            .request(imageAssetJson.url, (res) => {
-                const dataStream = new stream.Transform();
-
-                res.on('data', (chunk) => {
-                    dataStream.push(chunk);
-                });
-
-                res.on('end', () => {
-                    fs.writeFileSync(`.temp/imageAssets/${fileName}`, dataStream.read());
-                });
-            })
-            .end();
+        await getImageAsset(imageAssetJson, fileName);
 
         console.log(`saved imageAsset '${fileName}'`);
     }

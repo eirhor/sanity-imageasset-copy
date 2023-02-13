@@ -1,0 +1,11 @@
+{
+  "name": "sanity-imageasset-copy",
+  "version": "1.0.0",
+  "main": "src\\index.js",
+  "repository": "https://github.com/eirhor/sanity-imageasset-copy.git",
+  "author": "Eirik Horvath <horvath.eirik@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@sanity/client": "^4.0.1"
+  }
+}

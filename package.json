@@ -6,6 +6,9 @@
   "author": "Eirik Horvath <horvath.eirik@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@sanity/client": "^4.0.1"
+    "@sanity/client": "^4.0.1",
+    "@trivago/prettier-plugin-sort-imports": "^4.0.0",
+    "geta-prettier-config": "^1.0.0",
+    "prettier": "^2.8.4"
   }
 }
